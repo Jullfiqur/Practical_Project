@@ -14,6 +14,8 @@ Starting my README work.
 I was given the task to deploy a working FLASK application.
 
 ## Technologiesutilised 
+Below I have listed the technologies I have implemented throughout this project. 
+
  - Kanban Board: Jira
  - Version Control: Git
  - CI Server: Jenkins
@@ -24,6 +26,18 @@ I was given the task to deploy a working FLASK application.
  - Reverse Proxy: NGINX
  - Orchestration Tool: Kubernetes
  - Infrastructure Management: Terraform
+
+### Kanban Board: Jira
+
+I used the Kanban Board: Jira to help me breakdown the project into smaller tasks. I then organised each task in accordance to how I wanted to progress throughout the completion of the project. I factored in the time and difficulty needed of each task. Having this Jira board also helped plan out my project.
+
+### Cloud Server: AWS EC2
+
+For my cloud server I chose to work with Amazon Web Services and their EC2 instance to launch my virtual machine. When launching an instance I configured the security groups and the ports accessible to it. Also assigning the storage space needed before working on the project aided me to work freely. 
+
+### Reverse Proxy: NGINX
+
+My choice of reverse proxy was NGINX. As already being familiar with the reverse proxy it was easier for me to implement it to my project, its functionality in regards to my project acted as a reverse proxy and a load balancer.
 
 ## RiskAssessment
 
