@@ -1,6 +1,6 @@
 # QAC SFIA2 Project
 
-Starting README work.
+Starting my README work.
 
 ## Contents
 
