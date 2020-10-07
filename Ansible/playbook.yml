@@ -3,4 +3,11 @@
   tasks:
   - name: 'Install docker-compose'
     script: dockercomposeinstall.sh
+
+  - name: 'Install docker'
+    script: installdocker.sh
+
+  - name: 'Install jenkins'
+    script: installjenkins.sh
+
  
