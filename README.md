@@ -5,15 +5,15 @@ Starting README work.
 ## Contents
 
 - [Brief](#Brief)
-- [Technologies utilised](#Technologies%20utilised)
-- [Risk Assessment](#Risk%20Assessment)
-- [Future Improvements](#Future%20Improvements)
+- [Technologies utilised](#Technologiesutilised)
+- [Risk Assessment](#RiskAssessment)
+- [Future Improvements](#FutureImprovements)
 
 ## Brief
 
 I was given the task to deploy a working FLASK application.
 
-## Technologies utilised 
+## Technologiesutilised 
  - Kanban Board: Jira
  - Version Control: Git
  - CI Server: Jenkins
@@ -25,9 +25,9 @@ I was given the task to deploy a working FLASK application.
  - Orchestration Tool: Kubernetes
  - Infrastructure Management: Terraform
 
-## Risk Assessment
+## RiskAssessment
 
-## Future Improvements
+## FutureImprovements
 
 Throughout this project I have realised there were some improvements I could have made at different sections. 
 
