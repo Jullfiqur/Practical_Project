@@ -31,4 +31,5 @@ I was given the task to deploy a working FLASK application.
 
 Throughout this project I have realised there were some improvements I could have made at different sections. 
 
-The End.
+End.
+
