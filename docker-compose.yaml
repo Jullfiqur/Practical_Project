@@ -11,15 +11,22 @@ services:
    - target: 5001
      published: 5001
    environment:
-    SECRET_KEY: $SECRET_KEY
-    DATABASE_URI: $DATABASE_URI
+   - SECRET_KEY=password
+   - DATABASE_URI=mysql+pymysql://root:password@database:3306/users
  database:
    build: ./database
    ports:
    - target: 3306 
      published: 3306 
    environment:
-    MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-   
+   - MYSQL_ROOT_PASSWORD=password
+ nginx:
+   image: nginx:alpine
+   ports:
+   - "80:80"
+   volumes:
+   - type: bind
+     source: ./Nginx/nginx.conf
+     target: /etc/nginx/nginx.conf   
  
 
