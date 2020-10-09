@@ -41,6 +41,6 @@ spec:
       - name: database
         image: jullfiqur/sfia2:database
         ports:
-        - containerPort:
+        - containerPort: 3306
 
         
