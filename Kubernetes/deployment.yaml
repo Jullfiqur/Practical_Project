@@ -31,15 +31,15 @@ spec:
         ports:
         - containerPort: 80
       - name: frontend
-        image: 
+        image: jullfiqur/sfia2:frontend 
         ports:
         - containerPort: 5000
       - name: backend
-        image:
+        image: jullfiqur/sfia2:backend
         ports:
         - containerPort: 5001
       - name: database
-        image:
+        image: jullfiqur/sfia2:database
         ports:
         - containerPort:
 
