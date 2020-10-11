@@ -19,6 +19,19 @@ pipeline{
                 }
             }
 
+	    stage('Docker-compose Install'){
+		steps{
+		    sh '''
+		    sudo apt update
+		    sudo apt install -y curl jq
+		    version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
+		    sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+		    sudo chmod +x /usr/local/bin/docker-compose
+
+		    '''
+		}
+	    }
+
 	    stage('Docker compose build'){
 		steps{
 		    sh "sudo docker-compose build"
@@ -41,9 +54,19 @@ pipeline{
 			cd Practical_Project
 			curl https://get.docker.com | sudo bash
 			sudo usermod -aG docker $(whoami)
-			docker-compose build
+			sudo apt update
+			sudo apt install -y curl jq
+			version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
+			sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+			sudo chmod +x /usr/local/bin/docker-compose
+			docker build -t frontend
+			docker build -t backend
+			docker build -t database
+			export DATABASE_URI=$DATABASE_URI
+			export SECRET_KEY=$SECRET_KEY
+			export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
 			docker-compose up
-			pytest
+		#	pytest
 
 
 			EOF
