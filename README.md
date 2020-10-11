@@ -45,5 +45,6 @@ My choice of reverse proxy was NGINX. As already being familiar with the reverse
 
 Throughout this project I have realised there were some improvements I could have made at different sections. 
 
+Going to add more future improvements.
 End.
 
