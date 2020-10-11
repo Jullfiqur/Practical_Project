@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+      app: nginx
+  ports: 
+  - protocol: TCP
+    port: 8080
+    targetPort: 80
+  type: LoadBalancer
+ 
+Volume
+
+
+
+
+
+#What do I set the type as? Loadbalancer, ClusterIP or ReverseProxy? Use volume for connection to nginx reverse proxy.
+
