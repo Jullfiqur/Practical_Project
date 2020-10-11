@@ -30,14 +30,17 @@ spec:
         image: nginx
         ports:
         - containerPort: 80
+
       - name: frontend
         image: jullfiqur/sfia2:frontend 
         ports:
         - containerPort: 5000
+
       - name: backend
         image: jullfiqur/sfia2:backend
         ports:
         - containerPort: 5001
+
       - name: database
         image: jullfiqur/sfia2:database
         ports:
