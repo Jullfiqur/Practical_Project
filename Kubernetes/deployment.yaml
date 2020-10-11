@@ -30,14 +30,17 @@ spec:
         image: nginx
         ports:
         - containerPort: 80
+
       - name: frontend
         image: 
         ports:
         - containerPort: 5000
+
       - name: backend
         image:
         ports:
         - containerPort: 5001
+
       - name: database
         image:
         ports:
