@@ -1,7 +1,7 @@
 pipeline{
         agent any
         stages{
-#	    stage('Docker install'){
+/*	    stage('Docker install'){
 #		steps{
 #		     sh "curl https://get.docker.com | sudo bash"
 #		}
@@ -43,7 +43,7 @@ pipeline{
 #		    sh "sudo docker-compose up -d"
 #		}
 #	    }
-
+*/
 	    stage('VM onto new machine'){
 		steps{
 		     withCredentials([
