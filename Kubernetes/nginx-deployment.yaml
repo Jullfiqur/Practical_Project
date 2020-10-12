@@ -1,19 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: nginx
+  labels:
+    app: nginx
 spec:
   replicas:
   selector:
     matchLabels:
-      app: flaskapp
+      app: nginx
   template:
     metadata:
       labels:
-        app: flaskapp
+        app: nginx
     spec:
       containers:
       - name: nginx
         image: nginx
         ports:
         - containerPort: 80
+	volumeMounts:
+        - name: nginx-config
+        - mountPath: /etc/nginx/nginx.conf
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+
+
