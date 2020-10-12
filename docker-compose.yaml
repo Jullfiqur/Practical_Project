@@ -11,8 +11,9 @@ services:
    - target: 5001
      published: 5001
    environment:
-   - SECRET_KEY=password
-   - DATABASE_URI=mysql+pymysql://root:password@database:3306/users
+   - SECRET_KEY=$SECRET_KEY
+   - DATABASE_URI=$DATABASE_URI
+   - TEST_DATABASE_URI=$TEST_DATABASE_URI
  database:
    build: ./database
    ports:
