@@ -2,11 +2,28 @@
 
 # ipv4 ec2
 
-ec2-18-224-5-201.us-east-2.compute.amazonaws.com
+#ec2-18-224-5-201.us-east-2.compute.amazonaws.com
 
-[all:vars]
+[Jenkins]
+ec2-3-22-221-113.us-east-2.compute.amazonaws.com
+
+[Jenkins:vars]
 ansible_user=ubuntu
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 ansible_ssh_private_key_file=~/.ssh/AWSfirst.pem
+
+[Secondvm]
+ec2-52-14-147-75.us-east-2.compute.amazonaws.com
+
+[Secondvm:vars]
+ansible_user=ubuntu
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_private_key_file=~/.ssh/AWSfirst.pem
+
+
+#[all:vars]
+#ansible_user=ubuntu
+#ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+#ansible_ssh_private_key_file=~/.ssh/AWSfirst.pem
 
 
