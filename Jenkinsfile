@@ -67,10 +67,7 @@ pipeline{
 			sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 			sudo chmod +x /usr/local/bin/docker-compose
 			pwd
-			export DATABASE_URI=$DATABASE_URI
-			export SECRET_KEY=$SECRET_KEY
-			export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-			export TEST_DATABASE_URI=$TEST_DATABASE_URI
+			export DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD TEST_DATABASE_URI=$TEST_DATABASE_URI
 			sudo -E DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD docker-compose up -d
 
 
