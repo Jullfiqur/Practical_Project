@@ -1,16 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: frontend
+  labels:
+    app: frontend
 spec:
   replicas:
   selector:
     matchLabels:
-      app: flaskapp
+      app: frontend
   template:
     metadata:
       labels:
-        app: flaskapp
+        app: frontend
     spec:
       containers:
       - name: frontend

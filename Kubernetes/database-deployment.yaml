@@ -1,20 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: database
+  labels:
+    app: database
 spec:
   replicas:
   selector:
     matchLabels:
-      app: flaskapp
+      app: database
   template:
     metadata:
       labels:
-        app: flaskapp
+        app: database
     spec:
       containers:
       - name: database
         image: jullfiqur/sfia2:database
         ports:
         - containerPort: 3306
+	env:
+	 - name: MYSQL_ROOT_PASSWORD
+	   value: "password"
+#Come back to the env bit
+
 
