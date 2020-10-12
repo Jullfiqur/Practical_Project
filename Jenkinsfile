@@ -59,14 +59,14 @@ pipeline{
 			echo $pemkey
 			ssh -tt -o "StrictHostKeyChecking=no" -i $pemkey ubuntu@ec2-52-14-147-75.us-east-2.compute.amazonaws.com << EOF
 			git clone https://github.com/Jullfiqur/Practical_Project.git
-			cd Practical_Project
-			curl https://get.docker.com | sudo bash
+			cd Practical_Project	
+/*			curl https://get.docker.com | sudo bash
 			sudo usermod -aG docker $(whoami)
 			sudo apt update
 			sudo apt install -y curl jq
 			version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
 			sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-			sudo chmod +x /usr/local/bin/docker-compose
+*/			sudo chmod +x /usr/local/bin/docker-compose
 			export DATABASE_URI=$DATABASE_URI
 			export SECRET_KEY=$SECRET_KEY
 			export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
