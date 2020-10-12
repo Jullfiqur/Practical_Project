@@ -1,0 +1,751 @@
+============================= test session starts ==============================
+platform linux -- Python 3.7.9, pytest-6.0.1, py-1.9.0, pluggy-0.13.1
+rootdir: /app
+plugins: cov-2.10.0
+collected 1 item
+
+tests/test_backend.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+___________________________ TestViews.test_db_return ___________________________
+
+self = <pymysql.connections.Connection object at 0x7f71f735a250>, sock = None
+
+    def connect(self, sock=None):
+        self._closed = False
+        try:
+            if sock is None:
+                if self.unix_socket:
+                    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                    sock.settimeout(self.connect_timeout)
+                    sock.connect(self.unix_socket)
+                    self.host_info = "Localhost via UNIX socket"
+                    self._secure = True
+                    if DEBUG: print('connected using unix_socket')
+                else:
+                    kwargs = {}
+                    if self.bind_address is not None:
+                        kwargs['source_address'] = (self.bind_address, 0)
+                    while True:
+                        try:
+                            sock = socket.create_connection(
+                                (self.host, self.port), self.connect_timeout,
+>                               **kwargs)
+
+/usr/local/lib/python3.7/site-packages/pymysql/connections.py:583: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('database', 3306), timeout = 10, source_address = None
+
+    def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT,
+                          source_address=None):
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        A host of '' or port 0 tells the OS to use the default.
+        """
+    
+        host, port = address
+        err = None
+        for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket(af, socktype, proto)
+                if timeout is not _GLOBAL_DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+                sock.connect(sa)
+                # Break explicitly a reference cycle
+                err = None
+                return sock
+    
+            except error as _:
+                err = _
+                if sock is not None:
+                    sock.close()
+    
+        if err is not None:
+            try:
+>               raise err
+
+/usr/local/lib/python3.7/socket.py:728: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('database', 3306), timeout = 10, source_address = None
+
+    def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT,
+                          source_address=None):
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        A host of '' or port 0 tells the OS to use the default.
+        """
+    
+        host, port = address
+        err = None
+        for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket(af, socktype, proto)
+                if timeout is not _GLOBAL_DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+>               sock.connect(sa)
+E               ConnectionRefusedError: [Errno 111] Connection refused
+
+/usr/local/lib/python3.7/socket.py:716: ConnectionRefusedError
+
+During handling of the above exception, another exception occurred:
+
+self = Engine(mysql+pymysql://root:***@database:3306/testdb?charset=utf8)
+fn = <bound method Pool.connect of <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>>
+connection = None
+
+    def _wrap_pool_connect(self, fn, connection):
+        dialect = self.dialect
+        try:
+>           return fn()
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:2276: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>
+
+    def connect(self):
+        """Return a DBAPI connection from the pool.
+    
+        The connection is instrumented such that when its
+        ``close()`` method is called, the connection will be returned to
+        the pool.
+    
+        """
+        if not self._use_threadlocal:
+>           return _ConnectionFairy._checkout(self)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:363: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'sqlalchemy.pool.base._ConnectionFairy'>
+pool = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>
+threadconns = None, fairy = None
+
+    @classmethod
+    def _checkout(cls, pool, threadconns=None, fairy=None):
+        if not fairy:
+>           fairy = _ConnectionRecord.checkout(pool)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:760: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cls = <class 'sqlalchemy.pool.base._ConnectionRecord'>
+pool = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>
+
+    @classmethod
+    def checkout(cls, pool):
+>       rec = pool._do_get()
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:492: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>
+
+    def _do_get(self):
+        use_overflow = self._max_overflow > -1
+    
+        try:
+            wait = use_overflow and self._overflow >= self._max_overflow
+            return self._pool.get(wait, self._timeout)
+        except sqla_queue.Empty:
+            # don't do things inside of "except Empty", because when we say
+            # we timed out or can't connect and raise, Python 3 tells
+            # people the real error is queue.Empty which it isn't.
+            pass
+        if use_overflow and self._overflow >= self._max_overflow:
+            if not wait:
+                return self._do_get()
+            else:
+                raise exc.TimeoutError(
+                    "QueuePool limit of size %d overflow %d reached, "
+                    "connection timed out, timeout %d"
+                    % (self.size(), self.overflow(), self._timeout),
+                    code="3o7r",
+                )
+    
+        if self._inc_overflow():
+            try:
+                return self._create_connection()
+            except:
+                with util.safe_reraise():
+>                   self._dec_overflow()
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.util.langhelpers.safe_reraise object at 0x7f71f72bf6d0>
+type_ = None, value = None, traceback = None
+
+    def __exit__(self, type_, value, traceback):
+        # see #2703 for notes
+        if type_ is None:
+            exc_type, exc_value, exc_tb = self._exc_info
+            self._exc_info = None  # remove potential circular references
+            if not self.warn_only:
+>               compat.reraise(exc_type, exc_value, exc_tb)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tp = <class 'pymysql.err.OperationalError'>
+value = OperationalError(2003, "Can't connect to MySQL server on 'database' ([Errno 111] Connection refused)")
+tb = <traceback object at 0x7f71f72df5f0>, cause = None
+
+    def reraise(tp, value, tb=None, cause=None):
+        if cause is not None:
+            assert cause is not value, "Same cause emitted"
+            value.__cause__ = cause
+        if value.__traceback__ is not tb:
+            raise value.with_traceback(tb)
+>       raise value
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py:153: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>
+
+    def _do_get(self):
+        use_overflow = self._max_overflow > -1
+    
+        try:
+            wait = use_overflow and self._overflow >= self._max_overflow
+            return self._pool.get(wait, self._timeout)
+        except sqla_queue.Empty:
+            # don't do things inside of "except Empty", because when we say
+            # we timed out or can't connect and raise, Python 3 tells
+            # people the real error is queue.Empty which it isn't.
+            pass
+        if use_overflow and self._overflow >= self._max_overflow:
+            if not wait:
+                return self._do_get()
+            else:
+                raise exc.TimeoutError(
+                    "QueuePool limit of size %d overflow %d reached, "
+                    "connection timed out, timeout %d"
+                    % (self.size(), self.overflow(), self._timeout),
+                    code="3o7r",
+                )
+    
+        if self._inc_overflow():
+            try:
+>               return self._create_connection()
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>
+
+    def _create_connection(self):
+        """Called by subclasses to create a new ConnectionRecord."""
+    
+>       return _ConnectionRecord(self)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:308: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.pool.base._ConnectionRecord object at 0x7f71f735a210>
+pool = <sqlalchemy.pool.impl.QueuePool object at 0x7f71f736ca90>, connect = True
+
+    def __init__(self, pool, connect=True):
+        self.__pool = pool
+        if connect:
+>           self.__connect(first_connect_check=True)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:437: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.pool.base._ConnectionRecord object at 0x7f71f735a210>
+first_connect_check = True
+
+    def __connect(self, first_connect_check=False):
+        pool = self.__pool
+    
+        # ensure any existing connection is removed, so that if
+        # creator fails, this attribute stays None
+        self.connection = None
+        try:
+            self.starttime = time.time()
+>           connection = pool._invoke_creator(self)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:639: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+connection_record = <sqlalchemy.pool.base._ConnectionRecord object at 0x7f71f735a210>
+
+    def connect(connection_record=None):
+        if dialect._has_events:
+            for fn in dialect.dispatch.do_connect:
+                connection = fn(
+                    dialect, connection_record, cargs, cparams
+                )
+                if connection is not None:
+                    return connection
+>       return dialect.connect(*cargs, **cparams)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/strategies.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.mysql.pymysql.MySQLDialect_pymysql object at 0x7f71f745b2d0>
+cargs = ()
+cparams = {'charset': 'utf8', 'client_flag': 2, 'db': 'testdb', 'host': 'database', ...}
+
+    def connect(self, *cargs, **cparams):
+>       return self.dbapi.connect(*cargs, **cparams)
+
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/default.py:482: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ()
+kwargs = {'charset': 'utf8', 'client_flag': 2, 'db': 'testdb', 'host': 'database', ...}
+Connection = <class 'pymysql.connections.Connection'>
+
+    def Connect(*args, **kwargs):
+        """
+        Connect to the database; see connections.Connection.__init__() for
+        more information.
+        """
+        from .connections import Connection
+>       return Connection(*args, **kwargs)
+
+/usr/local/lib/python3.7/site-packages/pymysql/__init__.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pymysql.connections.Connection object at 0x7f71f735a250>
+host = 'database', user = 'root', password = 'password', database = 'testdb'
+port = 3306, unix_socket = None, charset = 'utf8', sql_mode = None
+read_default_file = None
+conv = {<class 'bool'>: <function escape_bool at 0x7f71f7376290>, <class 'int'>: <function escape_int at 0x7f71f73763b0>, <class 'float'>: <function escape_float at 0x7f71f7376440>, <class 'str'>: <function escape_unicode at 0x7f71f7376680>, ...}
+use_unicode = True, client_flag = 3842575
+cursorclass = <class 'pymysql.cursors.Cursor'>, init_command = None
+connect_timeout = 10, ssl = None, read_default_group = None, compress = None
+named_pipe = None, autocommit = False, db = 'testdb', passwd = 'password'
+local_infile = False, max_allowed_packet = 16777216, defer_connect = False
+auth_plugin_map = None, read_timeout = None, write_timeout = None
+bind_address = None, binary_prefix = False, program_name = None
+server_public_key = None
+
+    def __init__(self, host=None, user=None, password="",
+                 database=None, port=0, unix_socket=None,
+                 charset='', sql_mode=None,
+                 read_default_file=None, conv=None, use_unicode=None,
+                 client_flag=0, cursorclass=Cursor, init_command=None,
+                 connect_timeout=10, ssl=None, read_default_group=None,
+                 compress=None, named_pipe=None,
+                 autocommit=False, db=None, passwd=None, local_infile=False,
+                 max_allowed_packet=16*1024*1024, defer_connect=False,
+                 auth_plugin_map=None, read_timeout=None, write_timeout=None,
+                 bind_address=None, binary_prefix=False, program_name=None,
+                 server_public_key=None):
+        if use_unicode is None and sys.version_info[0] > 2:
+            use_unicode = True
+    
+        if db is not None and database is None:
+            database = db
+        if passwd is not None and not password:
+            password = passwd
+    
+        if compress or named_pipe:
+            raise NotImplementedError("compress and named_pipe arguments are not supported")
+    
+        self._local_infile = bool(local_infile)
+        if self._local_infile:
+            client_flag |= CLIENT.LOCAL_FILES
+    
+        if read_default_group and not read_default_file:
+            if sys.platform.startswith("win"):
+                read_default_file = "c:\\my.ini"
+            else:
+                read_default_file = "/etc/my.cnf"
+    
+        if read_default_file:
+            if not read_default_group:
+                read_default_group = "client"
+    
+            cfg = Parser()
+            cfg.read(os.path.expanduser(read_default_file))
+    
+            def _config(key, arg):
+                if arg:
+                    return arg
+                try:
+                    return cfg.get(read_default_group, key)
+                except Exception:
+                    return arg
+    
+            user = _config("user", user)
+            password = _config("password", password)
+            host = _config("host", host)
+            database = _config("database", database)
+            unix_socket = _config("socket", unix_socket)
+            port = int(_config("port", port))
+            bind_address = _config("bind-address", bind_address)
+            charset = _config("default-character-set", charset)
+            if not ssl:
+                ssl = {}
+            if isinstance(ssl, dict):
+                for key in ["ca", "capath", "cert", "key", "cipher"]:
+                    value = _config("ssl-" + key, ssl.get(key))
+                    if value:
+                        ssl[key] = value
+    
+        self.ssl = False
+        if ssl:
+            if not SSL_ENABLED:
+                raise NotImplementedError("ssl module not found")
+            self.ssl = True
+            client_flag |= CLIENT.SSL
+            self.ctx = self._create_ssl_ctx(ssl)
+    
+        self.host = host or "localhost"
+        self.port = port or 3306
+        self.user = user or DEFAULT_USER
+        self.password = password or b""
+        if isinstance(self.password, text_type):
+            self.password = self.password.encode('latin1')
+        self.db = database
+        self.unix_socket = unix_socket
+        self.bind_address = bind_address
+        if not (0 < connect_timeout <= 31536000):
+            raise ValueError("connect_timeout should be >0 and <=31536000")
+        self.connect_timeout = connect_timeout or None
+        if read_timeout is not None and read_timeout <= 0:
+            raise ValueError("read_timeout should be >= 0")
+        self._read_timeout = read_timeout
+        if write_timeout is not None and write_timeout <= 0:
+            raise ValueError("write_timeout should be >= 0")
+        self._write_timeout = write_timeout
+        if charset:
+            self.charset = charset
+            self.use_unicode = True
+        else:
+            self.charset = DEFAULT_CHARSET
+            self.use_unicode = False
+    
+        if use_unicode is not None:
+            self.use_unicode = use_unicode
+    
+        self.encoding = charset_by_name(self.charset).encoding
+    
+        client_flag |= CLIENT.CAPABILITIES
+        if self.db:
+            client_flag |= CLIENT.CONNECT_WITH_DB
+    
+        self.client_flag = client_flag
+    
+        self.cursorclass = cursorclass
+    
+        self._result = None
+        self._affected_rows = 0
+        self.host_info = "Not connected"
+    
+        # specified autocommit mode. None means use server default.
+        self.autocommit_mode = autocommit
+    
+        if conv is None:
+            conv = converters.conversions
+    
+        # Need for MySQLdb compatibility.
+        self.encoders = {k: v for (k, v) in conv.items() if type(k) is not int}
+        self.decoders = {k: v for (k, v) in conv.items() if type(k) is int}
+        self.sql_mode = sql_mode
+        self.init_command = init_command
+        self.max_allowed_packet = max_allowed_packet
+        self._auth_plugin_map = auth_plugin_map or {}
+        self._binary_prefix = binary_prefix
+        self.server_public_key = server_public_key
+    
+        self._connect_attrs = {
+            '_client_name': 'pymysql',
+            '_pid': str(os.getpid()),
+            '_client_version': VERSION_STRING,
+        }
+    
+        if program_name:
+            self._connect_attrs["program_name"] = program_name
+    
+        if defer_connect:
+            self._sock = None
+        else:
+>           self.connect()
+
+/usr/local/lib/python3.7/site-packages/pymysql/connections.py:325: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pymysql.connections.Connection object at 0x7f71f735a250>, sock = None
+
+    def connect(self, sock=None):
+        self._closed = False
+        try:
+            if sock is None:
+                if self.unix_socket:
+                    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                    sock.settimeout(self.connect_timeout)
+                    sock.connect(self.unix_socket)
+                    self.host_info = "Localhost via UNIX socket"
+                    self._secure = True
+                    if DEBUG: print('connected using unix_socket')
+                else:
+                    kwargs = {}
+                    if self.bind_address is not None:
+                        kwargs['source_address'] = (self.bind_address, 0)
+                    while True:
+                        try:
+                            sock = socket.create_connection(
+                                (self.host, self.port), self.connect_timeout,
+                                **kwargs)
+                            break
+                        except (OSError, IOError) as e:
+                            if e.errno == errno.EINTR:
+                                continue
+                            raise
+                    self.host_info = "socket %s:%d" % (self.host, self.port)
+                    if DEBUG: print('connected using socket')
+                    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+                sock.settimeout(None)
+                sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+            self._sock = sock
+            self._rfile = _makefile(sock, 'rb')
+            self._next_seq_id = 0
+    
+            self._get_server_information()
+            self._request_authentication()
+    
+            if self.sql_mode is not None:
+                c = self.cursor()
+                c.execute("SET sql_mode=%s", (self.sql_mode,))
+    
+            if self.init_command is not None:
+                c = self.cursor()
+                c.execute(self.init_command)
+                c.close()
+                self.commit()
+    
+            if self.autocommit_mode is not None:
+                self.autocommit(self.autocommit_mode)
+        except BaseException as e:
+            self._rfile = None
+            if sock is not None:
+                try:
+                    sock.close()
+                except:  # noqa
+                    pass
+    
+            if isinstance(e, (OSError, IOError, socket.error)):
+                exc = err.OperationalError(
+                        2003,
+                        "Can't connect to MySQL server on %r (%s)" % (
+                            self.host, e))
+                # Keep original exception and traceback to investigate error.
+                exc.original_exception = e
+                exc.traceback = traceback.format_exc()
+                if DEBUG: print(exc.traceback)
+>               raise exc
+E               pymysql.err.OperationalError: (2003, "Can't connect to MySQL server on 'database' ([Errno 111] Connection refused)")
+
+/usr/local/lib/python3.7/site-packages/pymysql/connections.py:630: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+self = <tests.test_backend.TestViews testMethod=test_db_return>
+
+    def setUp(self):
+        db.session.commit()
+>       db.drop_all()
+
+tests/test_backend.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.7/site-packages/flask_sqlalchemy/__init__.py:1041: in drop_all
+    self._execute_for_all_tables(app, bind, 'drop_all')
+/usr/local/lib/python3.7/site-packages/flask_sqlalchemy/__init__.py:1025: in _execute_for_all_tables
+    op(bind=self.get_engine(app, bind), **extra)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/sql/schema.py:4342: in drop_all
+    ddl.SchemaDropper, self, checkfirst=checkfirst, tables=tables
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:2048: in _run_visitor
+    with self._optional_conn_ctx_manager(connection) as conn:
+/usr/local/lib/python3.7/contextlib.py:112: in __enter__
+    return next(self.gen)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:2040: in _optional_conn_ctx_manager
+    with self._contextual_connect() as conn:
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:2242: in _contextual_connect
+    self._wrap_pool_connect(self.pool.connect, None),
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:2280: in _wrap_pool_connect
+    e, dialect, self
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:1547: in _handle_dbapi_exception_noconnection
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py:398: in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py:152: in reraise
+    raise value.with_traceback(tb)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/base.py:2276: in _wrap_pool_connect
+    return fn()
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:363: in connect
+    return _ConnectionFairy._checkout(self)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:760: in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:492: in checkout
+    rec = pool._do_get()
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py:139: in _do_get
+    self._dec_overflow()
+/usr/local/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py:68: in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/util/compat.py:153: in reraise
+    raise value
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/impl.py:136: in _do_get
+    return self._create_connection()
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:308: in _create_connection
+    return _ConnectionRecord(self)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:437: in __init__
+    self.__connect(first_connect_check=True)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/pool/base.py:639: in __connect
+    connection = pool._invoke_creator(self)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/strategies.py:114: in connect
+    return dialect.connect(*cargs, **cparams)
+/usr/local/lib/python3.7/site-packages/sqlalchemy/engine/default.py:482: in connect
+    return self.dbapi.connect(*cargs, **cparams)
+/usr/local/lib/python3.7/site-packages/pymysql/__init__.py:94: in Connect
+    return Connection(*args, **kwargs)
+/usr/local/lib/python3.7/site-packages/pymysql/connections.py:325: in __init__
+    self.connect()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pymysql.connections.Connection object at 0x7f71f735a250>, sock = None
+
+    def connect(self, sock=None):
+        self._closed = False
+        try:
+            if sock is None:
+                if self.unix_socket:
+                    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                    sock.settimeout(self.connect_timeout)
+                    sock.connect(self.unix_socket)
+                    self.host_info = "Localhost via UNIX socket"
+                    self._secure = True
+                    if DEBUG: print('connected using unix_socket')
+                else:
+                    kwargs = {}
+                    if self.bind_address is not None:
+                        kwargs['source_address'] = (self.bind_address, 0)
+                    while True:
+                        try:
+                            sock = socket.create_connection(
+                                (self.host, self.port), self.connect_timeout,
+                                **kwargs)
+                            break
+                        except (OSError, IOError) as e:
+                            if e.errno == errno.EINTR:
+                                continue
+                            raise
+                    self.host_info = "socket %s:%d" % (self.host, self.port)
+                    if DEBUG: print('connected using socket')
+                    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+                sock.settimeout(None)
+                sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+            self._sock = sock
+            self._rfile = _makefile(sock, 'rb')
+            self._next_seq_id = 0
+    
+            self._get_server_information()
+            self._request_authentication()
+    
+            if self.sql_mode is not None:
+                c = self.cursor()
+                c.execute("SET sql_mode=%s", (self.sql_mode,))
+    
+            if self.init_command is not None:
+                c = self.cursor()
+                c.execute(self.init_command)
+                c.close()
+                self.commit()
+    
+            if self.autocommit_mode is not None:
+                self.autocommit(self.autocommit_mode)
+        except BaseException as e:
+            self._rfile = None
+            if sock is not None:
+                try:
+                    sock.close()
+                except:  # noqa
+                    pass
+    
+            if isinstance(e, (OSError, IOError, socket.error)):
+                exc = err.OperationalError(
+                        2003,
+                        "Can't connect to MySQL server on %r (%s)" % (
+                            self.host, e))
+                # Keep original exception and traceback to investigate error.
+                exc.original_exception = e
+                exc.traceback = traceback.format_exc()
+                if DEBUG: print(exc.traceback)
+>               raise exc
+E               sqlalchemy.exc.OperationalError: (pymysql.err.OperationalError) (2003, "Can't connect to MySQL server on 'database' ([Errno 111] Connection refused)")
+E               (Background on this error at: http://sqlalche.me/e/e3q8)
+
+/usr/local/lib/python3.7/site-packages/pymysql/connections.py:630: OperationalError
+=============================== warnings summary ===============================
+/usr/local/lib/python3.7/site-packages/flask/_compat.py:139
+  /usr/local/lib/python3.7/site-packages/flask/_compat.py:139: DeprecationWarning: 'flask.json_available' is deprecated and will be removed in version 2.0.0.
+    self._warn()
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+
+----------- coverage: platform linux, python 3.7.9-final-0 -----------
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+application/__init__.py       9      0   100%
+application/models.py         6      1    83%
+application/routes.py        11      5    55%
+---------------------------------------------
+TOTAL                        26      6    77%
+
+=========================== short test summary info ============================
+FAILED tests/test_backend.py::TestViews::test_db_return - sqlalchemy.exc.Oper...
+========================= 1 failed, 1 warning in 2.44s =========================
+============================= test session starts ==============================
+platform linux -- Python 3.7.9, pytest-6.0.1, py-1.9.0, pluggy-0.13.1
+rootdir: /app
+plugins: cov-2.10.0
+collected 1 item
+
+tests/test_backend.py .                                                  [100%]
+
+=============================== warnings summary ===============================
+/usr/local/lib/python3.7/site-packages/flask/_compat.py:139
+  /usr/local/lib/python3.7/site-packages/flask/_compat.py:139: DeprecationWarning: 'flask.json_available' is deprecated and will be removed in version 2.0.0.
+    self._warn()
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+
+----------- coverage: platform linux, python 3.7.9-final-0 -----------
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+application/__init__.py       9      0   100%
+application/models.py         6      0   100%
+application/routes.py        11      0   100%
+---------------------------------------------
+TOTAL                        26      0   100%
+
+========================= 1 passed, 1 warning in 0.64s =========================
