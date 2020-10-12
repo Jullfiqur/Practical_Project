@@ -61,7 +61,6 @@ pipeline{
 			cd Practical_Project	
 			export DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD TEST_DATABASE_URI=$TEST_DATABASE_URI
 			sudo -E DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD docker-compose up -d
-                        docker exec backend pytest --cov application >> testcoverage.txt
 			exit
 
 
