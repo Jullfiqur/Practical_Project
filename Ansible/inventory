@@ -26,4 +26,4 @@ ansible_ssh_private_key_file=~/.ssh/AWSfirst.pem
 #ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 #ansible_ssh_private_key_file=~/.ssh/AWSfirst.pem
 
-
+#Come back to this and see if i should also include a TESTVM or a K8S cluster VM
