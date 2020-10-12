@@ -20,6 +20,7 @@ services:
      published: 3306 
    environment:
    - MYSQL_ROOT_PASSWORD=password
+
  nginx:
    image: nginx:alpine
    ports:
@@ -27,6 +28,8 @@ services:
    volumes:
    - type: bind
      source: ./Nginx/nginx.conf
-     target: /etc/nginx/nginx.conf   
+     target: /etc/nginx/nginx.conf
+   depends_on:
+    - frontend   
  
 
