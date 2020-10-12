@@ -10,12 +10,4 @@ spec:
     port: 80
     targetPort: 80
   type: LoadBalancer
- 
 
-#Volume
-
-
-
-
-
-#What do I set the type as? Loadbalancer, ClusterIP or ReverseProxy? Use volume for connection to nginx reverse proxy.

@@ -59,13 +59,10 @@ pipeline{
 			version=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
 			sudo curl -L "https://github.com/docker/compose/releases/download/${version}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 			sudo chmod +x /usr/local/bin/docker-compose
-			docker build -t frontend
-			docker build -t backend
-			docker build -t database
-			export DATABASE_URI=$DATABASE_URI
-			export SECRET_KEY=$SECRET_KEY
-			export MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-			docker-compose up
+			sudo -E DATABASE_URI=$DATABASE_URI SECRET_KEY=$SECRET_KEY MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD docker-compose up -d
+
+
+
 		#	pytest
 
 
