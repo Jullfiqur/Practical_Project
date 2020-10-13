@@ -80,6 +80,10 @@ Assessing risks is a very important matter throughout the development
 of any project. When creating a project each step has its own potential risks associated with it and it is vital these potential
 risks are identified and solutions are made to prevent them from being exploited. Below I have attached a table highlighting the various risks.
 
+|Description |Assessment |Risk likelihood of occurring |Impact 1- 10 |Responsibility|Proposed Mitigation |Risk likelihood of occurring |Impact 1- 10|
+|--------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|---|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|---|
+|AWS suddenly crashes			                 |Would lose access to all my instances and EC2 on amazon.                                                                                                                                                                                                                                                                          |1  |10  |Amazon|Can use other instance and VM providers such as GCP to store backups in case an event like this occurs |1  |10  |
+
 ## Future Improvements
 
 Throughout this project I have realised there were some improvements I could have made at different sections. 
