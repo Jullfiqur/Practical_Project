@@ -5,9 +5,9 @@ Starting my README work.
 ## Contents
 
 - [Brief](#Brief)
-- [Technologies utilised](#Technologiesutilised)
-- [Risk Assessment](#RiskAssessment)
-- [Future Improvements](#FutureImprovements)
+- [Technologies utilised](#Technologies-utilised)
+- [Risk Assessment](#Risk-Assessment)
+- [Future Improvements](#Future-Improvements)
 
 ## Brief
 
