@@ -2,13 +2,14 @@
 - hosts: all
   become: true
   tasks:
-  - name: 'Install docker-compose'
+  - name: install docker-compose
     script: dockercomposeinstall.sh
-
-  - name: 'Install docker'
+  - name: install docker
     script: installdocker.sh
-
-  - name: 'Install jenkins'
+  - name: install jenkins'
     script: installjenkins.sh
+  - name: install kubectl
+    script: installkubectl.sh
+
 
  
