@@ -86,7 +86,5 @@ risks are identified and solutions are made to prevent them from being exploited
 
 ## Future Improvements
 
-Throughout this project I have realised there were some improvements I could have made at different sections. 
+Throughout this project I have realised there were some improvements I could have made at different sections and continues to improve my kanban board along the way. There were difficulties as I was on a time pressure and implementing the new knowledge i had learnt into this project. However I believe that I learnt a lot on how to successfully deploy an application and make it more automated.
 
-Going to add more future improvements.
-End. 
