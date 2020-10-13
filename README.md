@@ -33,6 +33,8 @@ Below I have listed the technologies I have implemented throughout this project.
 
 I used the Kanban Board: Jira to help me breakdown the project into smaller tasks. I then organised each task in accordance to how I wanted to progress throughout the completion of the project. I factored in the time and difficulty needed of each task. Having this Jira board also helped plan out my project.
 
+![Practical_project kanban board](https://user-images.githubusercontent.com/69244970/95830075-0a28c480-0d2f-11eb-9e26-a5469bf54a02.jpg)
+
 ### Cloud Server: AWS EC2
 
 For my cloud server I chose to work with Amazon Web Services and their EC2 instance to launch my virtual machine. When launching an instance I configured the security groups and the ports accessible to it. Also assigning the storage space needed before working on the project aided me to work freely. 
