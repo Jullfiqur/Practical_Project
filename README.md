@@ -42,15 +42,9 @@ My choice of reverse proxy was NGINX. As already being familiar with the reverse
 
 ## RiskAssessment
 
-Risks are a major part of every project and something that 
-needs to be addressed. Each project has its own potential risks,
-and mine is no exception. Because of this, I have analysed risks
-which cover the whole scope of the project as to ensure that
-each area has precautions in place to ensure that the risks are
-mitigated, not only in specific areas but as a whole for the project.
-
 Assessing risks is a very important matter throughout the development
-of any project. When creating a project
+of any project. When creating a project each step has its own potential risks associated with it and it is vital these potential
+risks are identified and solutions are made to prevent them from being exploited. Below I have attached a table highlighting the various risks.
 
 ## FutureImprovements
 
