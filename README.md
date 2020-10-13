@@ -37,9 +37,13 @@ I used the Kanban Board: Jira to help me breakdown the project into smaller task
 
 For my cloud server I chose to work with Amazon Web Services and their EC2 instance to launch my virtual machine. When launching an instance I configured the security groups and the ports accessible to it. Also assigning the storage space needed before working on the project aided me to work freely. 
 
+I will be working with 2 EC2 instances, one for the deployment and one for the testing of my application. The deployment instance will be primarily for my Jenkins and the testing instance will be for my pytest application. 
+ 
+
 ### Reverse Proxy: NGINX
 
-My choice of reverse proxy was NGINX. As already being familiar with the reverse proxy it was easier for me to implement it to my project, its functionality in regards to my project acted as a reverse proxy and a load balancer.
+My choice of reverse proxy was NGINX. As already being familiar with the reverse proxy it was easier for me to implement it to my project, its functionality in regards to my project acted as a reverse proxy and a load balancer. Having a reverse proxy would limit the numbers of ports available for potential hackers to break through as its limited to one port. Without this there would be 3 ports exposed for the public which therby would great increase the security risk.
+
 
 ## Moscow Approach
 
@@ -54,7 +58,7 @@ The MOSCOW approach was utilised to ensure all the important features of the pra
 1. The jenkins pipeline include a webhook connecting to github/gitlab
 2. Ensure all secret texts are hidden at all times
 3. Deployed on Kubernetes Cluster
-- #### Could Contain
+- ### Could Contain
 1. The utilisation of Terraform integrated throughout the deployment. 
 2. RDS connection
 - ### Won't Contain
