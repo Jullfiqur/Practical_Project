@@ -38,7 +38,13 @@ I used the Kanban Board: Jira to help me breakdown the project into smaller task
 For my cloud server I chose to work with Amazon Web Services and their EC2 instance to launch my virtual machine. When launching an instance I configured the security groups and the ports accessible to it. Also assigning the storage space needed before working on the project aided me to work freely. 
 
 I will be working with 2 EC2 instances, one for the deployment and one for the testing of my application. The deployment instance will be primarily for my Jenkins and the testing instance will be for my pytest application. 
- 
+
+### Containerisation: Docker, Docker Compose
+
+1. The containerisation tool used throughout the project was Docker. Originally 4 images needed to be built in their respective directories. Frontend, Backend, Database, Nginx.
+Each directory needed a DOCKERFILE to make the environment available for the application to work on.  
+2. Once all the images have been made and pushed onto my personal docker-hub account. There needs to be a way to run each container and their images together.
+3. That is where docker-compose is very useful. It allows all the dockerfiles made within each directory to be combined and ran together. This is only able to do so with the creation of a docker-compose.yaml file.
 
 ### Reverse Proxy: NGINX
 
@@ -77,5 +83,4 @@ risks are identified and solutions are made to prevent them from being exploited
 Throughout this project I have realised there were some improvements I could have made at different sections. 
 
 Going to add more future improvements.
-End.
-
+End. 
