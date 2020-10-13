@@ -6,6 +6,7 @@ Starting my README work.
 
 - [Brief](#Brief)
 - [Technologies utilised](#Technologies-utilised)
+- [Moscow Approach](#Moscow-Approach)
 - [Risk Assessment](#Risk-Assessment)
 - [Future Improvements](#Future-Improvements)
 
@@ -39,6 +40,27 @@ For my cloud server I chose to work with Amazon Web Services and their EC2 insta
 ### Reverse Proxy: NGINX
 
 My choice of reverse proxy was NGINX. As already being familiar with the reverse proxy it was easier for me to implement it to my project, its functionality in regards to my project acted as a reverse proxy and a load balancer.
+
+## Moscow Approach
+
+The MOSCOW approach was utilised to ensure all the important features of the practical project was concentrated on.
+
+- ### Must Contain
+1. Using Ansible to configure jenkins on a virtual machine
+2. The reverse proxy used will be NGINX
+3. There has to be 2 databases, first for deployment and second for testing
+4. There needs to be an automated testing that takes place when a new update is made. 
+- ### Should Contain
+1. The jenkins pipeline include a webhook connecting to github/gitlab
+2. Ensure all secret texts are hidden at all times
+3. Deployed on Kubernetes Cluster
+- #### Could Contain
+1. The utilisation of Terraform integrated throughout the deployment. 
+2. RDS connection
+- ### Won't Contain
+1. The capability to deploy all the necessary applications with a few commands
+2. Won't be utilising more pods and containers 
+3. The capability to rollback to previous versions.
 
 ## Risk Assessment
 
