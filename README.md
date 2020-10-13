@@ -14,7 +14,7 @@ Starting my README work.
 I was given the task to deploy a working flask application. The project mainly focused on increasing the efficiency of the automation of deploying the flask application. Throughout this README I will be going over the tools utilised throughout the practical project.
 
 
-## Technologiesutilised 
+## Technologies utilised 
 Below I have listed the technologies I have implemented throughout this project. 
 
  - Kanban Board: Jira
@@ -40,13 +40,13 @@ For my cloud server I chose to work with Amazon Web Services and their EC2 insta
 
 My choice of reverse proxy was NGINX. As already being familiar with the reverse proxy it was easier for me to implement it to my project, its functionality in regards to my project acted as a reverse proxy and a load balancer.
 
-## RiskAssessment
+## Risk Assessment
 
 Assessing risks is a very important matter throughout the development
 of any project. When creating a project each step has its own potential risks associated with it and it is vital these potential
 risks are identified and solutions are made to prevent them from being exploited. Below I have attached a table highlighting the various risks.
 
-## FutureImprovements
+## Future Improvements
 
 Throughout this project I have realised there were some improvements I could have made at different sections. 
 
