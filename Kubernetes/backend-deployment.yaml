@@ -31,3 +31,9 @@ spec:
         image: jullfiqur/sfia2:backend
         ports:
         - containerPort: 5001
+        env:
+          - name: SECRET_KEY
+	    value: "password"
+
+# Need to get the env variables for TEST_DATABASE_URI DATABASE_URI with rds
+
