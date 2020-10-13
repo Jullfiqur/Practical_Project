@@ -33,7 +33,8 @@ spec:
         - containerPort: 5001
         env:
           - name: SECRET_KEY
-	    value: "password"
-
-# Need to get the env variables for TEST_DATABASE_URI DATABASE_URI with rds
-
+	    value: $SECRET_KEY
+	  - name: DATABASE_URI
+	    value: $DATABASE_URI
+	  - name: TEST_DATABASE_URI
+	    value: $TEST_DATABASE_URI

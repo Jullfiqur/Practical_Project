@@ -32,6 +32,3 @@ services:
    depends_on:
     - frontend   
  
-
-#sudo -E MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD docker-compose up
-
